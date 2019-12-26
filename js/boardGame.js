@@ -18,6 +18,8 @@
         this.isHidden = true;
         this.isSasuke = false;
         this.isFriend = false;
+        this.isEnemy = false;
+        this.name = null;
 
         this.draw = ()=>{
             var x = this.x, y = this.y;
@@ -61,14 +63,55 @@
             let y = Math.ceil(Math.random() * 19);
             this.tiles[x][y].isSasuke = true;
 
+            let friendList = [
+                {name: "Sakura"},
+                {name: "Hinata"},
+                {name: "Lee"},
+                {name: "Kakashi"},
+                {name: "Shikamaru"},
+                {name: "Kiba"},
+                {name: "Neji"},
+                {name: "Shino"},
+                {name: "Choji"},
+                {name: "Ino"}
+            ];
+
+            let enemyList = [
+                {name: "Hidan"},
+                {name: "Kakuzu"},
+                {name: "Kisame"},
+                {name: "Pein"},
+                {name: "Kabuto"},
+                {name: "Orochimaru"},
+                {name: "Zetsu"},
+                {name: "Madara"},
+                {name: "Deidara"},
+                {name: "Sasori"}
+            ];
+
             let arr = [[0, 0], [x, y]];
             let a, b;
+            let friendId = 0;
             while (arr.length < 12) {
                 a = Math.ceil(Math.random() * 19);
                 b = Math.ceil(Math.random() * 19);
                 if (!arr.includes([a, b])) {
                     arr.push([a, b]);
                     this.tiles[a][b].isFriend = true;
+                    this.tiles[a][b].name = friendList[friendId].name;
+                    friendId += 1;
+                }
+            }
+
+            let enemyId = 0;
+            while (arr.length < 22) {
+                a = Math.ceil(Math.random() * 19);
+                b = Math.ceil(Math.random() * 19);
+                if (!arr.includes([a, b])) {
+                    arr.push([a, b]);
+                    this.tiles[a][b].isEnemy = true;
+                    this.tiles[a][b].name = enemyList[enemyId].name;
+                    enemyId += 1;
                 }
             }
         };
@@ -118,6 +161,18 @@
         this.board = new Board(this.width, this.height, this.tileSize);
         this.naruto = new Naruto(0, 0);
 
+        // ===== GAME OVER ===== //
+
+        this.gameOver = (win) => {
+            if (win) {
+                alert("YOU WIN");
+            } else {
+                alert("YOU LOSE");
+            }
+
+            window.removeEventListener("keydown", this.move);
+        };
+
         // ===== MOVE HANDLER ===== //
 
         this.move = (e) => {
@@ -125,9 +180,15 @@
 
             if (this.board.tiles[this.naruto.x][this.naruto.y].isSasuke) {
                 alert("SASKEHHHHH!!!!!!");
+                this.gameOver(true);
             }
             if (this.board.tiles[this.naruto.x][this.naruto.y].isFriend) {
-                alert("BIMONNNNNNNNN!!!!!!");
+                alert(this.board.tiles[this.naruto.x][this.naruto.y].name);
+                this.naruto.stamina += 10;
+            }
+            if (this.board.tiles[this.naruto.x][this.naruto.y].isEnemy) {
+                alert(this.board.tiles[this.naruto.x][this.naruto.y].name);
+                this.naruto.stamina -= 10;
             }
 
             if (e.keyCode == '38') {
@@ -161,9 +222,10 @@
             this.board.tiles[this.naruto.x][this.naruto.y].isHidden = false;
             this.board.draw();
             
-            this.naruto.stamina -= 10;
+            this.naruto.stamina -= 1;
             if (this.naruto.stamina < 1) {
                 alert("MODYARRRRR!!!!");
+                this.gameOver(false);
             }
         };
 
