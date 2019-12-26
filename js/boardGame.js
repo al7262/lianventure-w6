@@ -108,6 +108,7 @@
     function Naruto(x, y) {
         this.x = x;
         this.y = y;
+        this.stamina = 100;
     };
 
     function Game(width, height){
@@ -159,7 +160,11 @@
             }
             this.board.tiles[this.naruto.x][this.naruto.y].isHidden = false;
             this.board.draw();
-
+            
+            this.naruto.stamina -= 10;
+            if (this.naruto.stamina < 1) {
+                alert("MODYARRRRR!!!!");
+            }
         };
 
         // ===== INITIALIZE GAME ===== //
