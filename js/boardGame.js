@@ -16,6 +16,7 @@
         this.x = x*this.size;
         this.y = y*this.size;
         this.isHidden = true;
+        this.isSasuke = false;
 
         this.draw = ()=>{
             var x = this.x, y = this.y;
@@ -54,6 +55,10 @@
                     this.tiles[row][col] = new Tile(tileSize, row, col);
                 }
             }
+
+            let x = Math.ceil(Math.random() * 19);
+            let y = Math.ceil(Math.random() * 19);
+            this.tiles[x][y].isSasuke = true;
         };
 
         this.draw = ()=>{
@@ -104,26 +109,38 @@
 
         this.move = (e) => {
             this.board.reveal(this.naruto.x, this.naruto.y);
+
+            if (this.board.tiles[this.naruto.x][this.naruto.y].isSasuke) {
+                alert("SASKEHHHHH!!!!!!");
+            }
             
             if (e.keyCode == '38') {
-                this.naruto.y -= 1;
-                this.board.reveal(this.naruto.x, this.naruto.y);
-                this.board.naruto(this.naruto.x, this.naruto.y, this.naruto.x, this.naruto.y+1);
+                if (this.naruto.y > 0) {
+                    this.naruto.y -= 1;
+                    this.board.reveal(this.naruto.x, this.naruto.y);
+                    this.board.naruto(this.naruto.x, this.naruto.y, this.naruto.x, this.naruto.y+1);
+                }
             }
             else if (e.keyCode == '40') {
-                this.naruto.y += 1;
-                this.board.reveal(this.naruto.x, this.naruto.y);
-                this.board.naruto(this.naruto.x, this.naruto.y, this.naruto.x, this.naruto.y-1);
+                if (this.naruto.y < 19) {
+                    this.naruto.y += 1;
+                    this.board.reveal(this.naruto.x, this.naruto.y);
+                    this.board.naruto(this.naruto.x, this.naruto.y, this.naruto.x, this.naruto.y-1);
+                }
             }
             else if (e.keyCode == '37') {
-                this.naruto.x -= 1;
-                this.board.reveal(this.naruto.x, this.naruto.y);
-                this.board.naruto(this.naruto.x, this.naruto.y, this.naruto.x+1, this.naruto.y);
+                if (this.naruto.x > 0) {
+                    this.naruto.x -= 1;
+                    this.board.reveal(this.naruto.x, this.naruto.y);
+                    this.board.naruto(this.naruto.x, this.naruto.y, this.naruto.x+1, this.naruto.y);
+                }
             }
             else if (e.keyCode == '39') {
-                this.naruto.x += 1;
-                this.board.reveal(this.naruto.x, this.naruto.y);
-                this.board.naruto(this.naruto.x, this.naruto.y, this.naruto.x-1, this.naruto.y);
+                if (this.naruto.x < 19) {
+                    this.naruto.x += 1;
+                    this.board.reveal(this.naruto.x, this.naruto.y);
+                    this.board.naruto(this.naruto.x, this.naruto.y, this.naruto.x-1, this.naruto.y);
+                }
             }
             this.board.tiles[this.naruto.x][this.naruto.y].isHidden = false;
             this.board.draw();
