@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'njnaruto';
-    src: url('narutoFont/fonts/njnaruto.eot');
-    src: url('narutoFont/fonts/njnaruto.eot') format('embedded-opentype'),
-         url('narutoFont/fonts/njnaruto.woff2') format('woff2'),
-         url('narutoFont/fonts/njnaruto.woff') format('woff'),
-         url('narutoFont/fonts/njnaruto.ttf') format('truetype'),
-         url('narutoFont/fonts/njnaruto.svg#njnaruto') format('svg');
+    src: url('../font/NarutoFont/njnaruto.eot');
+    src: url('../font/NarutoFont/njnaruto.eot') format('embedded-opentype'),
+         url('../font/NarutoFont/njnaruto.woff2') format('woff2'),
+         url('../font/NarutoFont/njnaruto.woff') format('woff'),
+         url('../font/NarutoFont/njnaruto.ttf') format('truetype'),
+         url('../font/NarutoFont/njnaruto.svg#njnaruto') format('svg');
 }
 
 .main {
@@ -37,6 +37,8 @@
     font-family: 'njnaruto';
     font-size: 40px;
     color: yellow;
+    background-color: transparent;
+    border: 0px;
 }
 
 .start-button:hover {

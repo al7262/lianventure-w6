@@ -1,3 +1,38 @@
 canvas#canvas{
     background-color: green;
 }
+
+.layermin2{
+    position: absolute;
+    top: 0;
+    z-index: -2;
+}
+
+.layermin1{
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+
+.layer0{
+    position: absolute;
+    top: 0;
+    z-index: 0;
+}
+
+.layer1{
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+
+.layer2{
+    position: absolute;
+    top: 0;
+    z-index: 2;
+}
+
+.layout{
+    display: flex;
+    justify-content: center;
+}
