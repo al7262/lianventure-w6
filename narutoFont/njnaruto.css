@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'njnaruto';
+    src: url('fonts/njnaruto.eot');
+    src: url('fonts/njnaruto.eot') format('embedded-opentype'),
+         url('fonts/njnaruto.woff2') format('woff2'),
+         url('fonts/njnaruto.woff') format('woff'),
+         url('fonts/njnaruto.ttf') format('truetype'),
+         url('fonts/njnaruto.svg#njnaruto') format('svg');
+}

@@ -1,6 +1,7 @@
 (function () {
     const canvas = document.getElementById('canvas'),
-        context = canvas.getContext('2d'),
+    context = canvas.getContext('2d'),
+
 
         tileSprite = new Image(),
         narutoSprite = new Image(),
