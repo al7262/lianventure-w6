@@ -4,8 +4,8 @@
 
         tileSprite = new Image(),
         bgSprite = new Image();
-    tileSprite.src = 'img/tile.jpg';
-    bgSprite.src = 'img/background.jpg';
+    tileSprite.src = 'img/treeTile.png';
+    bgSprite.src = 'img/grassTile.png';
 
     function Tile(size, x, y){
         this.size = size;
@@ -33,9 +33,9 @@
         this.init = ()=>{
             let row, col;
 
-            for(row = this.height; row>0; row--){
+            for(row = this.height-1; row>=0; row--){
                 this.tiles[row] = [];
-                for(col = this.width; col>0; col--){
+                for(col = this.width-1; col>=0; col--){
                     this.tiles[row][col] = new Tile(tileSize, row, col);
                 }
             }
@@ -44,8 +44,8 @@
         this.draw = ()=>{
             var row, col;
 
-            for (row = this.height; row > 0; row--) {
-                for (col = this.width; col > 0; col--) {
+            for (row = this.height-1; row>=0; row--) {
+                for (col = this.width-1; col>=0; col--) {
                     this.tiles[row][col].draw();
                 }
             }
