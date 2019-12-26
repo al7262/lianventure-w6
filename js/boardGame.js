@@ -185,10 +185,12 @@
             if (this.board.tiles[this.naruto.x][this.naruto.y].isFriend) {
                 alert(this.board.tiles[this.naruto.x][this.naruto.y].name);
                 this.naruto.stamina += 10;
+                this.board.tiles[this.naruto.x][this.naruto.y].isFriend = false;
             }
             if (this.board.tiles[this.naruto.x][this.naruto.y].isEnemy) {
                 alert(this.board.tiles[this.naruto.x][this.naruto.y].name);
                 this.naruto.stamina -= 10;
+                this.board.tiles[this.naruto.x][this.naruto.y].isEnemy = false;
             }
 
             if (e.keyCode == '38') {
