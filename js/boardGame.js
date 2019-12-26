@@ -1,9 +1,9 @@
 (function () {
     const canvas = document.getElementById('canvas'),
-        context = canvas.getContext('2d'),
+    context = canvas.getContext('2d'),
 
-        tileSprite = new Image(),
-        bgSprite = new Image();
+    tileSprite = new Image(),
+    bgSprite = new Image();
     tileSprite.src = 'img/treeTile.png';
     bgSprite.src = 'img/grassTile.png';
 
