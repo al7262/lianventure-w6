@@ -1,5 +1,5 @@
-canvas#canvas{
-    background-color: green;
+canvas#game{
+    margin-left: -160px;
 }
 
 .layermin2{
@@ -35,5 +35,31 @@ canvas#canvas{
 .layout{
     display: flex;
     justify-content: center;
-    background-color: rgb(164, 243, 164);
+}
+
+.side-bar{
+    width: 800px;
+    height: 640px;
+    background-color: darkslategray;
+}
+
+.naruto-side{
+    background-image: url('../img/narutoSide.gif');
+    background-size: cover;
+    border-radius: 100px;
+    width: 124px;
+    height: 124px;
+    position: absolute;
+    right: 18px;
+    top: 18px;
+}
+
+.hp-bar{
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: 6px;
+    border-radius: 50px;
 }

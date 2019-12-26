@@ -10,26 +10,25 @@
 
 .main {
     background-color: rebeccapurple;
-    width: 640px;
+    width: 800px;
     height: 640px;
     display: block;
     margin: auto;
 }
 
 .img-first-display {
-    width: 640px;
+    width: 100%;
     display: block;
-    margin: auto;
+    margin-top: 80px;
 }
 
 .start-button {
-    display: block;
-    text-align: center;
-    margin: auto;
-    margin-top: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);    
     background-color: rebeccapurple;
     padding: 15px;
-    width: 130px;
 }
 
 .text-button {
@@ -42,15 +41,20 @@
 }
 
 .start-button:hover {
-    -ms-transform: scale(0.5); /* IE 9 */
-    -webkit-transform: scale(1.1); /* Safari 3-8 */
-    transform: scale(1.75); 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.text-button:hover{
+    font-size: 60px;
 }
 
 .welcome-text {
     text-align: center;
     font-family: 'njnaruto';
-    font-size: 25px;
+    font-size: 50px;
     color: bisque;
-    margin-top: 70px;
+    margin-top: 20px;
 }

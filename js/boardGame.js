@@ -1,4 +1,4 @@
-const canvas = document.getElementById('canvas'),
+const canvas = document.getElementById('game'),
     context = canvas.getContext('2d'),
         tileSprite = new Image(),
         narutoSprite = new Image(),
@@ -62,6 +62,7 @@ function Board(width, height, tileSize){
             }
         }
     };
+
     this.reveal = (x, y) => {
         const clickedTile = this.tiles[x][y];
         if(clickedTile.isHidden) {
@@ -93,6 +94,7 @@ function Game(width, height){
     this.width = width;
     this.height = height;
     this.tileSize = 32;
+    const sideBar = new SideBar();
     this.board = new Board(this.width, this.height, this.tileSize);
     this.naruto = new Naruto(0, 0);
 
@@ -100,7 +102,7 @@ function Game(width, height){
 
     this.move = (e) => {
         this.board.reveal(this.naruto.x, this.naruto.y);
-        
+        sideBar.updateHpBar(100, 200);
         if (e.keyCode == '38') {
             this.naruto.y -= 1;
             this.board.reveal(this.naruto.x, this.naruto.y);
@@ -129,15 +131,54 @@ function Game(width, height){
 
     this.init = () => {
         console.log('start');
-        canvas.setAttribute('class', 'layer1');
+        this.show();
+        sideBar.show();
+        sideBar.initHpBar()
         canvas.width = width * this.tileSize;
         canvas.height = height * this.tileSize;
-
         window.addEventListener("keydown", this.move);
 
         this.board.init();
         this.board.draw();
     };
+
+    this.show = () => {
+        canvas.setAttribute('class', 'layer1');
+    }
+
+    this.hide = () => {
+        canvas.setAttribute('class', 'layermin2');
+    }
+}
+
+function SideBar(){
+    const layout = document.getElementsByClassName('layout');
+    const sideBar = document.createElement('div');
+    sideBar.setAttribute('class', 'side-bar layer0');
+
+    const profPic = document.createElement('div');
+    profPic.setAttribute('class', 'naruto-side');
+
+    const hpBar = document.createElement('div');
+    this.initHpBar = () => {
+        hpBar.setAttribute('class', 'progress-circle progress-100 hp-bar');
+    }
+    this.updateHpBar = (currentHp, maxHp) => {
+        const percentage = Math.ceil((currentHp/maxHp)*100);
+        hpBar.setAttribute('class', `progress-circle progress-${percentage} hp-bar`);
+    }
+      
+    sideBar.appendChild(hpBar);
+    sideBar.appendChild(profPic);
+    layout[0].appendChild(sideBar);
+    
+    this.show = () => {
+        sideBar.setAttribute('class', 'side-bar layer0');
+    }
+
+    this.hide = () => {
+        sideBar.setAttribute('class', 'side-bar layermin2');
+    }
 }
 
 function MainMenu(){
@@ -163,7 +204,7 @@ function MainMenu(){
     button.addEventListener('click', ()=>{
         game = new Game(20,20);
         game.init();
-        mainMenu.setAttribute('class', 'main layermin2')
+        this.hide();
     });
     startBtn.appendChild(button);
     
@@ -171,10 +212,19 @@ function MainMenu(){
     mainMenu.appendChild(welcomeText);
     mainMenu.appendChild(startBtn);
     layout[0].appendChild(mainMenu);
-}
+
+    this.show = () => {
+        mainMenu.setAttribute('class', 'main layer0');
+    }
+
+    this.hide = () => {
+        mainMenu.setAttribute('class', 'main layermin2');
+    }
+ }
 
 (function(){
     window.onload = () => {
         const main = new MainMenu();
+        mainMenu.show();
     }
 }());
