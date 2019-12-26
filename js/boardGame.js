@@ -17,6 +17,7 @@
         this.y = y*this.size;
         this.isHidden = true;
         this.isSasuke = false;
+        this.isFriend = false;
 
         this.draw = ()=>{
             var x = this.x, y = this.y;
@@ -55,10 +56,21 @@
                     this.tiles[row][col] = new Tile(tileSize, row, col);
                 }
             }
-
+            
             let x = Math.ceil(Math.random() * 19);
             let y = Math.ceil(Math.random() * 19);
             this.tiles[x][y].isSasuke = true;
+
+            let arr = [[0, 0], [x, y]];
+            let a, b;
+            while (arr.length < 12) {
+                a = Math.ceil(Math.random() * 19);
+                b = Math.ceil(Math.random() * 19);
+                if (!arr.includes([a, b])) {
+                    arr.push([a, b]);
+                    this.tiles[a][b].isFriend = true;
+                }
+            }
         };
 
         this.draw = ()=>{
@@ -113,7 +125,10 @@
             if (this.board.tiles[this.naruto.x][this.naruto.y].isSasuke) {
                 alert("SASKEHHHHH!!!!!!");
             }
-            
+            if (this.board.tiles[this.naruto.x][this.naruto.y].isFriend) {
+                alert("BIMONNNNNNNNN!!!!!!");
+            }
+
             if (e.keyCode == '38') {
                 if (this.naruto.y > 0) {
                     this.naruto.y -= 1;
