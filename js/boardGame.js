@@ -171,8 +171,11 @@ function Game(width, height){
             image.setAttribute("src", "img/lose.gif");
         }
         window.removeEventListener("keydown", this.move);
-        window.onclick = () => {
-            location.reload();
+        image.onclick = () => {
+            image.style.display = 'none';
+            var mainMenu = new MainMenu();
+            mainMenu.show();
+            this.hide();
         }
     };
 
@@ -192,7 +195,7 @@ function Game(width, height){
             this.naruto.stamina += 10;
             this.board.tiles[this.naruto.x][this.naruto.y].isFriend = false;
             window.removeEventListener("keydown", this.move);
-            window.onclick = () => {
+            image.onclick = () => {
                 image.style.display = "none";
                 window.addEventListener("keydown", this.move);
             }
@@ -205,7 +208,7 @@ function Game(width, height){
             this.naruto.stamina -= 10;
             this.board.tiles[this.naruto.x][this.naruto.y].isEnemy = false;
             window.removeEventListener("keydown", this.move);
-            window.onclick = () => {
+            image.onclick = () => {
                 image.style.display = "none";
                 window.addEventListener("keydown", this.move);
             }
@@ -347,6 +350,6 @@ function MainMenu(){
 (function(){
     window.onload = () => {
         const main = new MainMenu();
-        mainMenu.show();
+        main.show();
     }
 }());
