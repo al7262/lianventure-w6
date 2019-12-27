@@ -65,14 +65,14 @@ function Board(width, height, tileSize){
         this.tiles[x][y].isSasuke = true;
 
         this.friendList = [
-            {name: "Sakura", status: 'Sakura is beautiful as always...'},
+            {name: "Sakura", status: 'Sakura is as beautiful as always...'},
             {name: "Hinata", status: 'Hinata, finally we meet again...'},
-            {name: "Lee", status: "Hey.. Lee, what makes you angry...?"},
+            {name: "Lee", status: "Hey, Lee... what makes you angry...?"},
             {name: "Kakashi", status: 'Sensei, I want to go home, now!'},
             {name: "Shikamaru", status: "Do not be so lazy, Shikamaru!"},
             {name: "Kiba", status: "Kiba, let us find Sasuke..."},
-            {name: "Neji", status: "Hey.. Neji, how are you today?"},
-            {name: "Shino", status: "Would you lend me your insect?"},
+            {name: "Neji", status: "Hey, Neji... how are you today?"},
+            {name: "Shino", status: "Would you lend me your insects?"},
             {name: "Choji", status: "Do not eat to much, Choji!"},
             {name: "Ino", status: 'Ino, where is Sakura?'}
         ];
@@ -80,12 +80,12 @@ function Board(width, height, tileSize){
         this.enemyList = [
             {name: "Hidan", status: "Don't fight them, fight me!"},
             {name: "Kakuzu", status: 'I am your truly enemy...'},
-            {name: "Kisame", status: "I won't allow you to destroy my Village!"},
+            {name: "Kisame", status: "I won't allow you to destroy my village!"},
             {name: "Pein", status: 'Pein, we have different mindset'},
             {name: "Kabuto", status: 'I will fight you till one of us die!'},
             {name: "Orochimaru", status: 'I will not give up to fight you!'},
             {name: "Zetsu", status: 'Zetsu, show your face!'},
-            {name: "Madara", status: 'Our fight is eternal blood ceremony!'},
+            {name: "Madara", status: 'Our fight is an eternal blood ceremony!'},
             {name: "Deidara", status: "Come on, don't fly away anymore"},
             {name: "Sasori", status: 'Your dolls are the cause of people suffering...'}
         ];
@@ -274,7 +274,7 @@ function Game(width, height){
         this.show();
         sideBar.show();
         sideBar.initHpBar()
-        sideBar.initStatus(this.naruto.stamina, 'I dont know what i have done');
+        sideBar.initStatus(this.naruto.stamina, 'Where is Sasuke?');
         sideBar.initMeetNotif();
         canvas.width = width * this.tileSize;
         canvas.height = height * this.tileSize;
