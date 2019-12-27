@@ -10,6 +10,26 @@ const canvas = document.getElementById('game'),
     bgSprite.src = 'img/grassTile.png';
     homeSprite.src = "img/homeTile.png";
 
+function Scene(){
+    this.SakuraScene = () => {
+        const listDialog = [];
+        listDialog.push(new DialogBox('Sakura', 'What are you doing again, Naruto?'));
+        listDialog.push(new DialogBox('Naruto', 'No-nothing. Just thinking about what ramen to eat for tonight'));
+        listDialog.push(new DialogBox('Sakura', 'What kind of silly thought that is going inside your mind...'));
+        listDialog.push(new DialogBox('Naruto', '.... (Actually, i was just thinking about you)'));
+
+        for(dialog in listDialog){
+            dialog.init();
+            setTimeout({
+                dialog.show()
+            },3000)
+            setTimeout({
+                dialog.hide()
+            },500)
+        }
+    }
+}
+
 function Tile(size, x, y){
     this.size = size;
     this.x = x*this.size;
@@ -49,6 +69,7 @@ function Board(width, height, tileSize){
     this.numOfHiddenTiles = width*height;
     this.friendList = [];
     this.enemyList = [];
+    this.Scene = new Scene();
 
     this.init = ()=>{
         let row, col;
@@ -290,6 +311,44 @@ function Game(width, height){
 
     this.hide = () => {
         canvas.setAttribute('class', 'layermin2');
+    }
+}
+
+function DialogBox(name, sentence){
+    this.name = name;
+    this.sentence = sentence;
+
+    this.init = () => {
+        const layout = document.getElementsByClassName('layout');
+        const box = document.createElement('div');
+        box.setAttribute('class', 'dialog-box');
+        const boxText = document.createElement('p');
+        boxText.innerHTML = sentence;
+
+        const imageBox = document.createElement('div');
+        imageBox.setAttribute('class', 'dialog-picture');
+        this.image = new Image();
+        this.image.src = `img/${name}.png`;
+
+        const nameBox = document.createElement('div');
+        nameBox.setAttribute('class', 'name-box');
+        const nameText = document.createElement('p');
+        nameText.innerHTML = name;
+        
+        nameBox.appendChild(nameText);
+        imageBox.appendChild(this.image);
+        imageBox.appendChild(nameBox);
+        box.appendChild(imageBox);
+        box.appendChild(boxText);
+        layout[0].appendChild(box);
+    }
+
+    this.show = () => {
+        box.setAttribute('class', 'dialog-box show');
+    }
+
+    this.hide = () => {
+        box.setAttribute('class', 'dialog-box hide');
     }
 }
 
