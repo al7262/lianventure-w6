@@ -1,0 +1,12 @@
+.musuh {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.musuh img {
+    display: none;
+    width: 800px;
+}
