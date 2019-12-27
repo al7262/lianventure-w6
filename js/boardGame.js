@@ -247,6 +247,7 @@ function Game(width, height){
         
         this.naruto.stamina -= 1;
         sideBar.updateHpBar(this.naruto.stamina, 200); // setiap gerak
+        sideBar.updateHp(this.naruto.stamina);
         if (this.naruto.stamina < 1) {
             this.gameOver(false);
         }
@@ -259,6 +260,8 @@ function Game(width, height){
         this.show();
         sideBar.show();
         sideBar.initHpBar()
+        sideBar.initStatus(this.naruto.stamina, 'I dont know what i have done');
+        sideBar.initMeetNotif();
         canvas.width = width * this.tileSize;
         canvas.height = height * this.tileSize;
         window.addEventListener("keydown", this.move);
@@ -288,13 +291,68 @@ function SideBar(){
     this.initHpBar = () => {
         hpBar.setAttribute('class', 'progress-circle progress-100 hp-bar');
     }
-    this.updateHpBar = (currentHp, maxHp) => {
+    this.updateHpBar = (currentHp, maxHp=200) => {
         const percentage = Math.ceil((currentHp/maxHp)*100);
         hpBar.setAttribute('class', `progress-circle progress-${percentage} hp-bar`);
     }
-      
+
+    const statusInfo = document.createElement('div');
+    const nameInfo = document.createElement('p');
+    const hpInfo = document.createElement('p');
+    const statusText = document.createElement('p');
+    statusInfo.appendChild(nameInfo);
+    statusInfo.appendChild(hpInfo);
+    statusInfo.appendChild(statusText);
+    this.initStatus = (currentHp, status='Feeling Nothing', maxHp=200, name='Naruto') => {
+        statusInfo.setAttribute('class', 'status-info');
+        nameInfo.innerHTML = `<strong>Name: ${name}</strong>`;
+        hpInfo.innerHTML = `Stamina: <strong>${currentHp}</strong>/${maxHp}`;
+        statusText.innerHTML = `Status: ${status}`;
+    }
+    this.updateHp = (currentHp, maxHp=200) => {
+        hpInfo.innerHTML = `Stamina: ${currentHp}/${maxHp}`;
+    }
+    this.updateStatus = (status='Feeling Nothing') => {
+        status.innerHTML = `Status: ${status}`;
+    }
+
+    const meetNotif = document.createElement('div');
+    meetNotif.setAttribute('class', 'meet-notif');
+    const meetText = document.createElement('p');
+    const yesBtn = document.createElement('button');
+    yesBtn.addEventListener('click', () =>{
+        //add function
+    });
+    const noBtn = document.createElement('button');
+    yesBtn.addEventListener('click', () =>{
+        //add function
+    });
+    meetNotif.appendChild(meetText);
+    meetNotif.appendChild(yesBtn);
+    meetNotif.appendChild(noBtn);
+    this.initMeetNotif = () => {
+        meetText.innerHTML = 'You just saw someone, do you want to meet them?'
+        yesBtn.innerHTML = 'YES!';
+        noBtn.innerHTML = 'NOO!';
+        meetText.setAttribute('class', 'hide');
+        yesBtn.setAttribute('class', 'hide');
+        noBtn.setAttribute('class', 'hide');
+    }
+    this.showMeetNotif = () => {
+        meetText.setAttribute('class', 'show');
+        yesBtn.setAttribute('class', 'show');
+        noBtn.setAttribute('class', 'show');
+    }
+    this.hideMeetNotif = () => {
+        meetText.setAttribute('class', 'hide');
+        yesBtn.setAttribute('class', 'hide');
+        noBtn.setAttribute('class', 'hide');
+    }
+
     sideBar.appendChild(hpBar);
     sideBar.appendChild(profPic);
+    sideBar.appendChild(statusInfo);
+    sideBar.append(meetNotif);
     layout[0].appendChild(sideBar);
     
     this.show = () => {
