@@ -181,14 +181,30 @@ function Game(width, height){
             this.gameOver(true);
         }
         if (this.board.tiles[this.naruto.x][this.naruto.y].isFriend) {
-            alert(this.board.tiles[this.naruto.x][this.naruto.y].name);
+            var popup = document.getElementById("musuh");
+            var image = popup.children[0];
+            image.style.display = "block";
+            image.setAttribute("src", "img/" + this.board.tiles[this.naruto.x][this.naruto.y].name + ".gif");
             this.naruto.stamina += 10;
             this.board.tiles[this.naruto.x][this.naruto.y].isFriend = false;
+            window.removeEventListener("keydown", this.move);
+            window.onclick = () => {
+                image.style.display = "none";
+                window.addEventListener("keydown", this.move);
+            }
         }
         if (this.board.tiles[this.naruto.x][this.naruto.y].isEnemy) {
-            alert(this.board.tiles[this.naruto.x][this.naruto.y].name);
+            var popup = document.getElementById("musuh");
+            var image = popup.children[0];
+            image.style.display = "block";
+            image.setAttribute("src", "img/" + this.board.tiles[this.naruto.x][this.naruto.y].name + ".gif");
             this.naruto.stamina -= 10;
             this.board.tiles[this.naruto.x][this.naruto.y].isEnemy = false;
+            window.removeEventListener("keydown", this.move);
+            window.onclick = () => {
+                image.style.display = "none";
+                window.addEventListener("keydown", this.move);
+            }
         }
 
         if (e.keyCode == '38') {
