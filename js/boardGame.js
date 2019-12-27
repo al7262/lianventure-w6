@@ -397,6 +397,23 @@ function MainMenu(){
     welcomeText.innerHTML = 'Welcome to the Adventure';
     welcomeText.setAttribute('class', 'welcome-text');
 
+    const questionMark = document.createElement("img");
+    questionMark.setAttribute("src", "img/questionMark.png");
+    questionMark.setAttribute("class", "question-mark");
+    questionMark.addEventListener("click", () => {
+        alert(
+            "===GAME OBJECTIVES=== \n"
+            + "FIND SASUKE!!! \n"
+            + "1. In this game, you will meet Naruto's friends / enemies \n"
+            + "2. Everytime you move, you will lose some stamina \n"
+            + "3. You will die if your stamina is hitting zero! \n"
+            + "4. Watch out the boundaries! \n\n"
+            + "===GAME CONTROLS=== \n"
+            + "ARROW (up, down, right, left): character movements \n"
+            + "MOUSE (left-click): choice options / close gif"
+        );
+    });
+
     const startBtn = document.createElement('div');
     startBtn.setAttribute('class', 'start-button');
     const button = document.createElement('button');
@@ -412,6 +429,7 @@ function MainMenu(){
     mainMenu.appendChild(divImg);
     mainMenu.appendChild(welcomeText);
     mainMenu.appendChild(startBtn);
+    mainMenu.appendChild(questionMark);
     layout[0].appendChild(mainMenu);
 
     this.show = () => {
