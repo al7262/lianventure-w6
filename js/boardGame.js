@@ -4,6 +4,7 @@ const canvas = document.getElementById('game'),
         narutoSprite = new Image(),
         bgSprite = new Image(),
         homeSprite = new Image();
+    let game;
     tileSprite.src = 'img/treeTile.png';
     narutoSprite.src = 'img/narutoTile.png';
     bgSprite.src = 'img/grassTile.png';
@@ -46,6 +47,8 @@ function Board(width, height, tileSize){
     this.tileSize = tileSize;
     this.tiles = [];
     this.numOfHiddenTiles = width*height;
+    this.friendList = [];
+    this.enemyList = [];
 
     this.init = ()=>{
         let row, col;
@@ -61,30 +64,30 @@ function Board(width, height, tileSize){
         let y = Math.ceil(Math.random() * 19);
         this.tiles[x][y].isSasuke = true;
 
-        let friendList = [
-            {name: "Sakura"},
-            {name: "Hinata"},
-            {name: "Lee"},
-            {name: "Kakashi"},
-            {name: "Shikamaru"},
-            {name: "Kiba"},
-            {name: "Neji"},
-            {name: "Shino"},
-            {name: "Choji"},
-            {name: "Ino"}
+        this.friendList = [
+            {name: "Sakura", status: 'Sakura is beautiful as always...'},
+            {name: "Hinata", status: 'Hinata, finally we meet again...'},
+            {name: "Lee", status: "Hey.. Lee, what makes you angry...?"},
+            {name: "Kakashi", status: 'Sensei, I want to go home, now!'},
+            {name: "Shikamaru", status: "Do not be so lazy, Shikamaru!"},
+            {name: "Kiba", status: "Kiba, let us find Sasuke..."},
+            {name: "Neji", status: "Hey.. Neji, how are you today?"},
+            {name: "Shino", status: "Would you lend me your insect?"},
+            {name: "Choji", status: "Do not eat to much, Choji!"},
+            {name: "Ino", status: 'Ino, where is Sakura?'}
         ];
 
-        let enemyList = [
-            {name: "Hidan"},
-            {name: "Kakuzu"},
-            {name: "Kisame"},
-            {name: "Pein"},
-            {name: "Kabuto"},
-            {name: "Orochimaru"},
-            {name: "Zetsu"},
-            {name: "Madara"},
-            {name: "Deidara"},
-            {name: "Sasori"}
+        this.enemyList = [
+            {name: "Hidan", status: "Don't fight them, fight me!"},
+            {name: "Kakuzu", status: 'I am your truly enemy...'},
+            {name: "Kisame", status: "I won't allow you to destroy my Village!"},
+            {name: "Pein", status: 'Pein, we have different mindset'},
+            {name: "Kabuto", status: 'I will fight you till one of us die!'},
+            {name: "Orochimaru", status: 'I will not give up to fight you!'},
+            {name: "Zetsu", status: 'Zetsu, show your face!'},
+            {name: "Madara", status: 'Our fight is eternal blood ceremony!'},
+            {name: "Deidara", status: "Come on, don't fly away anymore"},
+            {name: "Sasori", status: 'Your dolls are the cause of people suffering...'}
         ];
 
         let arr = [[0, 0], [x, y]];
@@ -96,7 +99,7 @@ function Board(width, height, tileSize){
             if (!arr.includes([a, b])) {
                 arr.push([a, b]);
                 this.tiles[a][b].isFriend = true;
-                this.tiles[a][b].name = friendList[friendId].name;
+                this.tiles[a][b].name = this.friendList[friendId].name;
                 friendId += 1;
             }
         }
@@ -108,7 +111,7 @@ function Board(width, height, tileSize){
             if (!arr.includes([a, b])) {
                 arr.push([a, b]);
                 this.tiles[a][b].isEnemy = true;
-                this.tiles[a][b].name = enemyList[enemyId].name;
+                this.tiles[a][b].name = this.enemyList[enemyId].name;
                 enemyId += 1;
             }
         }
@@ -181,37 +184,51 @@ function Game(width, height){
 
     // ===== MOVE HANDLER ===== //
 
+    this.meetSomeone = (person) => {
+        var popup = document.getElementById("musuh");
+        var image = popup.children[0];
+        image.style.display = "block";
+        image.setAttribute("src", "img/" + person.name + ".gif");
+        
+        image.onclick = () => {
+            image.style.display = "none";
+            window.addEventListener("keydown", this.move);
+            sideBar.updateStatus(person.status);
+            sideBar.hideMeetNotif();
+        }
+    }
+
     this.move = (e) => {
         this.board.reveal(this.naruto.x, this.naruto.y);
 
         if (this.board.tiles[this.naruto.x][this.naruto.y].isSasuke) {
             this.gameOver(true);
         }
-        if (this.board.tiles[this.naruto.x][this.naruto.y].isFriend) {
-            var popup = document.getElementById("musuh");
-            var image = popup.children[0];
-            image.style.display = "block";
-            image.setAttribute("src", "img/" + this.board.tiles[this.naruto.x][this.naruto.y].name + ".gif");
-            this.naruto.stamina += 10;
-            this.board.tiles[this.naruto.x][this.naruto.y].isFriend = false;
-            window.removeEventListener("keydown", this.move);
-            image.onclick = () => {
-                image.style.display = "none";
-                window.addEventListener("keydown", this.move);
+
+        if (this.board.tiles[this.naruto.x][this.naruto.y].isEnemy){
+            sideBar.showMeetNotif();
+            const name = this.board.tiles[this.naruto.x][this.naruto.y].name;
+            currentPerson = this.board.enemyList.filter((enemy)=>{
+                return enemy['name']===name
+            })
+            document.getElementById('yesButton').onclick = () => {
+                this.naruto.stamina -= 10;
+                return this.meetSomeone(currentPerson[0]);
             }
-        }
-        if (this.board.tiles[this.naruto.x][this.naruto.y].isEnemy) {
-            var popup = document.getElementById("musuh");
-            var image = popup.children[0];
-            image.style.display = "block";
-            image.setAttribute("src", "img/" + this.board.tiles[this.naruto.x][this.naruto.y].name + ".gif");
-            this.naruto.stamina -= 10;
             this.board.tiles[this.naruto.x][this.naruto.y].isEnemy = false;
-            window.removeEventListener("keydown", this.move);
-            image.onclick = () => {
-                image.style.display = "none";
-                window.addEventListener("keydown", this.move);
+        }
+
+        if (this.board.tiles[this.naruto.x][this.naruto.y].isFriend){
+            sideBar.showMeetNotif();
+            const name = this.board.tiles[this.naruto.x][this.naruto.y].name;
+            currentPerson = this.board.friendList.filter((friend)=>{
+                return friend['name']===name
+            })
+            document.getElementById('yesButton').onclick = () => {
+                this.naruto.stamina += 10;
+                return this.meetSomeone(currentPerson[0]);
             }
+            this.board.tiles[this.naruto.x][this.naruto.y].isFriend = false;
         }
 
         if (e.keyCode == '38') {
@@ -313,19 +330,21 @@ function SideBar(){
         hpInfo.innerHTML = `Stamina: ${currentHp}/${maxHp}`;
     }
     this.updateStatus = (status='Feeling Nothing') => {
-        status.innerHTML = `Status: ${status}`;
+        statusText.innerHTML = `Status: ${status}`;
     }
 
     const meetNotif = document.createElement('div');
     meetNotif.setAttribute('class', 'meet-notif');
     const meetText = document.createElement('p');
     const yesBtn = document.createElement('button');
+    yesBtn.setAttribute('id', 'yesButton');
     yesBtn.addEventListener('click', () =>{
-        //add function
+        decision = true;
     });
     const noBtn = document.createElement('button');
-    yesBtn.addEventListener('click', () =>{
-        //add function
+    noBtn.addEventListener('click', () =>{
+        window.addEventListener("keydown", game.move);
+        this.hideMeetNotif();
     });
     meetNotif.appendChild(meetText);
     meetNotif.appendChild(yesBtn);
@@ -339,6 +358,8 @@ function SideBar(){
         noBtn.setAttribute('class', 'hide');
     }
     this.showMeetNotif = () => {
+        let decision;
+        window.removeEventListener("keydown", game.move);
         meetText.setAttribute('class', 'show');
         yesBtn.setAttribute('class', 'show');
         noBtn.setAttribute('class', 'show');
