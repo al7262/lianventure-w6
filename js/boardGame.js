@@ -162,13 +162,18 @@ function Game(width, height){
     // ===== GAME OVER ===== //
 
     this.gameOver = (win) => {
+        var popup = document.getElementById("musuh");
+        var image = popup.children[0];
+        image.style.display = "block";
         if (win) {
-            alert("YOU WIN");
+            image.setAttribute("src", "img/win.gif");
         } else {
-            alert("YOU LOSE");
+            image.setAttribute("src", "img/lose.gif");
         }
-
         window.removeEventListener("keydown", this.move);
+        window.onclick = () => {
+            location.reload();
+        }
     };
 
     // ===== MOVE HANDLER ===== //
@@ -177,7 +182,6 @@ function Game(width, height){
         this.board.reveal(this.naruto.x, this.naruto.y);
 
         if (this.board.tiles[this.naruto.x][this.naruto.y].isSasuke) {
-            alert("SASKEHHHHH!!!!!!");
             this.gameOver(true);
         }
         if (this.board.tiles[this.naruto.x][this.naruto.y].isFriend) {
@@ -241,7 +245,6 @@ function Game(width, height){
         this.naruto.stamina -= 1;
         sideBar.updateHpBar(this.naruto.stamina, 200); // setiap gerak
         if (this.naruto.stamina < 1) {
-            alert("MODYARRRRR!!!!");
             this.gameOver(false);
         }
     };
@@ -256,7 +259,7 @@ function Game(width, height){
         canvas.width = width * this.tileSize;
         canvas.height = height * this.tileSize;
         window.addEventListener("keydown", this.move);
-
+        
         this.board.init();
         this.board.draw();
     };
