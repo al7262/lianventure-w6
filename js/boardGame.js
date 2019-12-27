@@ -175,10 +175,7 @@ function Game(width, height){
         }
         window.removeEventListener("keydown", this.move);
         image.onclick = () => {
-            image.style.display = 'none';
-            var mainMenu = new MainMenu();
-            mainMenu.show();
-            this.hide();
+            location.reload();
         }
     };
 
