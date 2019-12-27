@@ -31,6 +31,14 @@
     padding: 15px;
 }
 
+.question-mark {
+    position: absolute;
+    top: 1%;
+    left: 90%;
+    padding: 15px;
+    width: 5%;
+}
+
 .text-button {
     text-decoration: none;
     font-family: 'njnaruto';
